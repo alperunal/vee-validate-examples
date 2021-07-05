@@ -9,67 +9,13 @@
           tag="form"
         >
           <div class="form-group">
-            <ValidationProvider
-              rules="required"
-              v-slot="{ errors }"
-            >
-              <label>Contact method:</label>
-              <div>
-                <input
-                  type="radio"
-                  name="contact-method"
-                  id="email"
-                  value="email"
-                  v-model="contact.method"
-                />
-                <label for="email">E-mail</label>
-                <input
-                  type="radio"
-                  name="contact-method"
-                  id="phone"
-                  value="phone"
-                  v-model="contact.method"
-                />
-                <label for="phone">Phone</label>
-              </div>
-              <Error
-                :errors="errors"
-              />
-            </ValidationProvider>
+            <contact-method :contactMethod="contactMethod" @handleChange="handleChange" />
           </div>
-          <div class="form-group" v-if="contact.method === 'email'">
-            <ValidationProvider
-              rules="required"
-              v-slot="{ errors }"
-            >
-              <label>E-mail:</label>
-              <input
-                class="input"
-                type="email"
-                v-model="contact.email"
-                placeholder="abc@abc.com"
-              />
-              <Error
-                :errors="errors"
-              />
-            </ValidationProvider>
+          <div class="form-group" v-if="contactMethod === 'email'">
+            <contact-email :contactEmail="contactEmail" @handleChange="handleChange" />
           </div>
-          <div class="form-group" v-if="contact.method === 'phone'">
-            <ValidationProvider
-              rules="required"
-              v-slot="{ errors }"
-            >
-              <label>Phone number:</label>
-              <input
-                class="input"
-                type="tel"
-                v-model="contact.phone"
-                placeholder="06xxxxxxxx"
-              />
-              <Error
-                :errors="errors"
-              />
-            </ValidationProvider>
+          <div class="form-group" v-if="contactMethod === 'phone'">
+            <contact-phone :contactPhone="contactPhone" @handleChange="handleChange" />
           </div>
           <div class="form-group">
             <ValidationProvider
@@ -153,26 +99,35 @@
 </template>
 
 <script>
-import Error from '@/components/Error.vue';
+import Error from '@/components/shared/Error.vue';
+import ContactMethod from '../components/forms/ContactMethod.vue';
+import ContactEmail from '../components/forms/ContactEmail.vue';
+import ContactPhone from '../components/forms/ContactPhone.vue';
 
 export default {
   name: 'VeeValidate',
   components: {
     Error,
+    ContactMethod,
+    ContactEmail,
+    ContactPhone,
   },
   methods: {
     handleSubmit(form) {
       console.log('form', form);
     },
+    handleChange(key, value) {
+      console.log(key, value);
+      this[key] = value;
+      console.log(JSON.stringify(this.$data, null, 2));
+    },
   },
   data() {
     return {
       contractType: '',
-      contact: {
-        method: null,
-        email: null,
-        phone: null,
-      },
+      contactMethod: null,
+      contactEmail: null,
+      contactPhone: null,
       amount: null,
       termsAndConditions: false,
       subscribe: false,
