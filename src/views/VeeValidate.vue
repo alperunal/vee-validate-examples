@@ -18,72 +18,16 @@
             <contact-phone :contactPhone="contactPhone" @handleChange="handleChange" />
           </div>
           <div class="form-group">
-            <ValidationProvider
-              rules="required"
-              v-slot="{ errors }"
-            >
-              <label>Select contract type:</label>
-              <select
-                class="select"
-                v-model="contractType"
-              >
-                <option value="" disabled hidden>Select</option>
-                <option value="permanent">Permanent</option>
-                <option value="temporary">Temporary</option>
-              </select>
-              <Error
-                :errors="errors"
-              />
-            </ValidationProvider>
+            <contract-type :contractType="contractType" @handleChange="handleChange" />
           </div>
           <div class="form-group">
-            <ValidationProvider
-              rules="required|min_value:2000"
-              v-slot="{ errors }"
-            >
-              <label>Enter the amount:</label>
-              <input
-                class="input"
-                type="number"
-                placeholder="amount"
-                v-model="amount"
-              />
-              <Error
-                :errors="errors"
-              />
-            </ValidationProvider>
+            <amount :amount="amount" @handleChange="handleChange" />
           </div>
           <div class="form-group">
-            <ValidationProvider
-              :rules="{ required: { allowFalse: false } }"
-              v-slot="{ errors }"
-            >
-              <input
-                type="checkbox"
-                v-model="termsAndConditions"
-                id="termsandconditions"
-              />
-              <label for="termsandconditions">I agree with the terms and conditions.</label>
-              <Error
-                :errors="errors"
-              />
-            </ValidationProvider>
+            <terms-and-conditions :termsAndConditions="termsAndConditions" @handleChange="handleChange" />
           </div>
           <div class="form-group">
-            <ValidationProvider
-              rules="required"
-              v-slot="{ errors }"
-            >
-              <input
-                type="checkbox"
-                v-model="subscribe"
-                id="subscribe"
-              />
-              <label for="subscribe">Subscribe to newsletter.</label>
-              <Error
-                :errors="errors"
-              />
-            </ValidationProvider>
+            <subscribe-to-newsletter :subscribeToNewsletter="subscribeToNewsletter" @handleChange="handleChange" />
           </div>
           <button
             class="button button--submit"
@@ -99,25 +43,30 @@
 </template>
 
 <script>
-import Error from '@/components/shared/Error.vue';
 import ContactMethod from '../components/forms/ContactMethod.vue';
 import ContactEmail from '../components/forms/ContactEmail.vue';
 import ContactPhone from '../components/forms/ContactPhone.vue';
+import ContractType from '../components/forms/ContractType.vue';
+import TermsAndConditions from '../components/forms/TermsAndConditions.vue';
+import SubscribeToNewsletter from '../components/forms/SubscribeToNewsletter.vue';
+import Amount from '../components/forms/Amount.vue';
 
 export default {
   name: 'VeeValidate',
   components: {
-    Error,
     ContactMethod,
     ContactEmail,
     ContactPhone,
+    ContractType,
+    TermsAndConditions,
+    SubscribeToNewsletter,
+    Amount,
   },
   methods: {
     handleSubmit(form) {
       console.log('form', form);
     },
     handleChange(key, value) {
-      console.log(key, value);
       this[key] = value;
       console.log(JSON.stringify(this.$data, null, 2));
     },
@@ -130,7 +79,7 @@ export default {
       contactPhone: null,
       amount: null,
       termsAndConditions: false,
-      subscribe: false,
+      subscribeToNewsletter: false,
     };
   },
 };
