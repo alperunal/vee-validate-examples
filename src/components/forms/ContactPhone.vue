@@ -7,8 +7,8 @@
     <input
       class="input"
       type="tel"
-      :value="contactPhone"
-      @input="onChange('contactPhone', $event.target.value)"
+      :value="getContactPhone"
+      @input="onChange($event.target.value)"
       placeholder="06xxxxxxxx"
     />
     <Error
@@ -18,6 +18,7 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex';
 import Error from '@/components/shared/Error.vue';
 
 export default {
@@ -25,13 +26,13 @@ export default {
   components: {
     Error,
   },
-  props: {
-    contactPhone: String,
+  computed: {
+    ...mapGetters(['getContactPhone']),
   },
   methods: {
-    onChange(name, value) {
-      console.log(name, value);
-      this.$emit('handleChange', name, value);
+    ...mapActions(['setContactPhone']),
+    onChange(value) {
+      this.$store.dispatch('setContactPhone', value);
     },
   },
 };

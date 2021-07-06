@@ -8,8 +8,8 @@
       class="input"
       type="number"
       placeholder="amount"
-      :value="amount"
-      @input="onChange('amount', parseInt($event.target.value), 10)"
+      :value="getAmount"
+      @input="onChange(parseInt($event.target.value), 10)"
     />
     <Error
       :errors="errors"
@@ -18,6 +18,7 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex';
 import Error from '@/components/shared/Error.vue';
 
 export default {
@@ -25,12 +26,13 @@ export default {
   components: {
     Error,
   },
-  props: {
-    amount: Number,
+  computed: {
+    ...mapGetters(['getAmount']),
   },
   methods: {
-    onChange(name, value) {
-      this.$emit('handleChange', name, value);
+    ...mapActions(['setAmount']),
+    onChange(value) {
+      this.$store.dispatch('setAmount', value);
     },
   },
 };

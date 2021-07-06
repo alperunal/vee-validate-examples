@@ -9,16 +9,16 @@
         type="radio"
         name="contact-method"
         id="email"
-        :value="contactMethod"
-        @change="onChange('contactMethod', 'email')"
+        :value="getContactMethod"
+        @change="onChange('email')"
       />
       <label for="email">E-mail</label>
       <input
         type="radio"
         name="contact-method"
         id="phone"
-        :value="contactMethod"
-        @change="onChange('contactMethod', 'phone')"
+        :value="getContactMethod"
+        @change="onChange('phone')"
       />
       <label for="phone">Phone</label>
     </div>
@@ -29,6 +29,7 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex';
 import Error from '@/components/shared/Error.vue';
 
 export default {
@@ -36,12 +37,13 @@ export default {
   components: {
     Error,
   },
-  props: {
-    contactMethod: String,
+  computed: {
+    ...mapGetters(['getContactMethod']),
   },
   methods: {
-    onChange(name, value) {
-      this.$emit('handleChange', name, value);
+    ...mapActions(['setContactMethod']),
+    onChange(value) {
+      this.$store.dispatch('setContactMethod', value);
     },
   },
 };
