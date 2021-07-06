@@ -7,8 +7,8 @@
     <input
       class="input"
       type="email"
-      :value="contactEmail"
-      @input="onChange('contactEmail', $event.target.value)"
+      :value="getContactEmail"
+      @input="onChange($event.target.value)"
       placeholder="abc@abc.com"
     />
     <Error
@@ -18,6 +18,7 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex';
 import Error from '@/components/shared/Error.vue';
 
 export default {
@@ -25,12 +26,13 @@ export default {
   components: {
     Error,
   },
-  props: {
-    contactEmail: String,
+  computed: {
+    ...mapGetters(['getContactEmail']),
   },
   methods: {
-    onChange(name, value) {
-      this.$emit('handleChange', name, value);
+    ...mapActions(['setContactEmail']),
+    onChange(value) {
+      this.$store.dispatch('setContactEmail', value);
     },
   },
 };

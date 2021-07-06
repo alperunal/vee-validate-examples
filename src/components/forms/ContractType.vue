@@ -6,8 +6,8 @@
     <label>Select contract type:</label>
     <select
       class="select"
-      :value="contractType"
-      @change="onChange('contractType', $event.target.value)"
+      :value="getContractType"
+      @change="onChange($event.target.value)"
     >
       <option value="" disabled hidden>Select</option>
       <option value="permanent">Permanent</option>
@@ -20,6 +20,7 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex';
 import Error from '@/components/shared/Error.vue';
 
 export default {
@@ -27,12 +28,13 @@ export default {
   components: {
     Error,
   },
-  props: {
-    contractType: String,
+  computed: {
+    ...mapGetters(['getContractType']),
   },
   methods: {
-    onChange(name, value) {
-      this.$emit('handleChange', name, value);
+    ...mapActions(['setContractType']),
+    onChange(value) {
+      this.$store.dispatch('setContractType', value);
     },
   },
 };

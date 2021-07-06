@@ -5,8 +5,8 @@
   >
     <input
       type="checkbox"
-      :value="subscribeToNewsletter"
-      @change="onChange('subscribeToNewsletter', $event.target.checked)"
+      :value="getSubscribeToNewsletter"
+      @change="onChange($event.target.checked)"
       id="subscribe"
     />
     <label for="subscribe">Subscribe to newsletter.</label>
@@ -17,6 +17,7 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex';
 import Error from '@/components/shared/Error.vue';
 
 export default {
@@ -24,12 +25,13 @@ export default {
   components: {
     Error,
   },
-  props: {
-    subscribeToNewsletter: Boolean,
+  computed: {
+    ...mapGetters(['getSubscribeToNewsletter']),
   },
   methods: {
-    onChange(name, value) {
-      this.$emit('handleChange', name, value);
+    ...mapActions(['setSubscribeToNewsletter']),
+    onChange(value) {
+      this.$store.dispatch('setSubscribeToNewsletter', value);
     },
   },
 };

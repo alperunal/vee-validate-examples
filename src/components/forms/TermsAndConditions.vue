@@ -5,8 +5,8 @@
   >
     <input
       type="checkbox"
-      :value="termsAndConditions"
-      @change="onChange('termsAndConditions', $event.target.checked)"
+      :value="getTermsAndConditions"
+      @change="onChange($event.target.checked)"
       id="termsandconditions"
     />
     <label for="termsandconditions">
@@ -19,6 +19,7 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex';
 import Error from '@/components/shared/Error.vue';
 
 export default {
@@ -26,12 +27,13 @@ export default {
   components: {
     Error,
   },
-  props: {
-    termsAndConditions: Boolean,
+  computed: {
+    ...mapGetters(['getTermsAndConditions']),
   },
   methods: {
-    onChange(name, value) {
-      this.$emit('handleChange', name, value);
+    ...mapActions(['setTermsAndConditions']),
+    onChange(value) {
+      this.$store.dispatch('setTermsAndConditions', value);
     },
   },
 };
