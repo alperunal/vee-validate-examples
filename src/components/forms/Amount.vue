@@ -2,6 +2,7 @@
   <ValidationProvider
     rules="required|min_value:2000"
     v-slot="{ errors }"
+    ref="amount"
   >
     <label>Enter the amount:</label>
     <input
@@ -26,6 +27,9 @@ export default {
   components: {
     Error,
   },
+  props: {
+    getRef: Function,
+  },
   computed: {
     ...mapGetters(['getAmount']),
   },
@@ -34,6 +38,11 @@ export default {
     onChange(value) {
       this.$store.dispatch('setAmount', value);
     },
+  },
+  mounted() {
+    if (this.getRef) {
+      this.getRef(this.$refs.amount);
+    }
   },
 };
 </script>

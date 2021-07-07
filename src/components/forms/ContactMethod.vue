@@ -2,6 +2,7 @@
   <ValidationProvider
     rules="required"
     v-slot="{ errors }"
+    ref="contactMethod"
   >
     <label>Contact method:</label>
     <div>
@@ -37,6 +38,9 @@ export default {
   components: {
     Error,
   },
+  props: {
+    getRef: Function,
+  },
   computed: {
     ...mapGetters(['getContactMethod']),
   },
@@ -45,6 +49,11 @@ export default {
     onChange(value) {
       this.$store.dispatch('setContactMethod', value);
     },
+  },
+  mounted() {
+    if (this.getRef) {
+      this.getRef(this.$refs.contactMethod);
+    }
   },
 };
 </script>

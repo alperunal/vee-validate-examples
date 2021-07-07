@@ -7,21 +7,34 @@
           v-slot="{ pristine, invalid }"
           @submit.prevent="handleSubmit"
           tag="form"
+          ref="observer"
         >
           <div class="form-group">
-            <contact-method />
+            <contact-method :getRef="getRef('contactMethod')" />
           </div>
-          <div class="form-group" v-if="getContactMethod === 'email'">
-            <contact-email />
+          <div
+            class="form-group"
+            v-if="getContactMethod === 'email'"
+          >
+            <contact-email :getRef="getRef('contactEmail')" />
           </div>
-          <div class="form-group" v-if="getContactMethod === 'phone'">
-            <contact-phone />
+          <div
+            class="form-group"
+            v-if="getContactMethod === 'phone'"
+          >
+            <contact-phone :getRef="getRef('contactPhone')" />
           </div>
-          <div class="form-group">
-            <contract-type />
+          <div
+            class="form-group"
+            v-if="($refs.contactEmail && $refs.contactEmail.flags.validated) || ($refs.contactPhone && $refs.contactPhone.flags.validated)"
+          >
+            <contract-type :getRef="getRef('contractType')" />
           </div>
-          <div class="form-group">
-            <amount />
+          <div
+            class="form-group"
+            v-if="$refs.contractType && $refs.contractType.flags.validated"
+          >
+            <amount :getRef="getRef('amount')" />
           </div>
           <div class="form-group">
             <terms-and-conditions />
@@ -69,6 +82,12 @@ export default {
   methods: {
     handleSubmit(form) {
       console.log('form', form);
+      console.log(this.$refs.observer);
+    },
+    getRef(key) {
+      return (ref) => {
+        this.$refs[key] = ref;
+      };
     },
   },
 };

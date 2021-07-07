@@ -2,6 +2,7 @@
   <ValidationProvider
     rules="required"
     v-slot="{ errors }"
+    ref="contractType"
   >
     <label>Select contract type:</label>
     <select
@@ -28,6 +29,9 @@ export default {
   components: {
     Error,
   },
+  props: {
+    getRef: Function,
+  },
   computed: {
     ...mapGetters(['getContractType']),
   },
@@ -36,6 +40,11 @@ export default {
     onChange(value) {
       this.$store.dispatch('setContractType', value);
     },
+  },
+  mounted() {
+    if (this.getRef) {
+      this.getRef(this.$refs.contractType);
+    }
   },
 };
 </script>

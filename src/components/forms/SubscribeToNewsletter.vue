@@ -1,6 +1,5 @@
 <template>
   <ValidationProvider
-    rules="required"
     v-slot="{ errors }"
   >
     <input

@@ -2,6 +2,7 @@
   <ValidationProvider
     rules="required"
     v-slot="{ errors }"
+    ref="contactEmail"
   >
     <label>E-mail:</label>
     <input
@@ -26,6 +27,9 @@ export default {
   components: {
     Error,
   },
+  props: {
+    getRef: Function,
+  },
   computed: {
     ...mapGetters(['getContactEmail']),
   },
@@ -34,6 +38,11 @@ export default {
     onChange(value) {
       this.$store.dispatch('setContactEmail', value);
     },
+  },
+  mounted() {
+    if (this.getRef) {
+      this.getRef(this.$refs.contactEmail);
+    }
   },
 };
 </script>
