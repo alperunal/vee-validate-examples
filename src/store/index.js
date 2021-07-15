@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import createPersistedState from 'vuex-persistedstate';
 import * as types from './types';
 
 Vue.use(Vuex);
@@ -69,6 +70,7 @@ const store = new Vuex.Store({
       state.subscribeToNewsletter = subscribeToNewsletter;
     },
   },
+  plugins: [createPersistedState({ storage: window.sessionStorage })],
 });
 
 export default store;
