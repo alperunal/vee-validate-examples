@@ -10,7 +10,7 @@
       type="number"
       placeholder="amount"
       :value="getAmount"
-      @input="onChange(parseInt($event.target.value), 10)"
+      @input="onChange(parseInt($event.target.value, 10))"
     />
     <Error
       :errors="errors"

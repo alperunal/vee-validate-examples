@@ -1,17 +1,14 @@
 <template>
   <ValidationProvider
-    :rules="{ required: { allowFalse: false } }"
     v-slot="{ errors }"
   >
     <input
       type="checkbox"
-      :value="getTermsAndConditions"
+      :checked="getSubscribeToNewsletter"
       @change="onChange($event.target.checked)"
-      id="termsandconditions"
+      id="subscribe"
     />
-    <label for="termsandconditions">
-      I agree with the terms and conditions.
-    </label>
+    <label for="subscribe">Subscribe to newsletter.</label>
     <Error
       :errors="errors"
     />
@@ -23,17 +20,17 @@ import { mapActions, mapGetters } from 'vuex';
 import Error from '@/components/shared/Error.vue';
 
 export default {
-  name: 'TermsAndConditions',
+  name: 'SubscribeToNewsletter',
   components: {
     Error,
   },
   computed: {
-    ...mapGetters(['getTermsAndConditions']),
+    ...mapGetters(['getSubscribeToNewsletter']),
   },
   methods: {
-    ...mapActions(['setTermsAndConditions']),
+    ...mapActions(['setSubscribeToNewsletter']),
     onChange(value) {
-      this.$store.dispatch('setTermsAndConditions', value);
+      this.$store.dispatch('setSubscribeToNewsletter', value);
     },
   },
 };

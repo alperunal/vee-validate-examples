@@ -57,13 +57,13 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import ContactMethod from '@/components/forms/ContactMethod.vue';
-import ContactEmail from '@/components/forms/ContactEmail.vue';
-import ContactPhone from '@/components/forms/ContactPhone.vue';
-import ContractType from '@/components/forms/ContractType.vue';
-import TermsAndConditions from '@/components/forms/TermsAndConditions.vue';
-import SubscribeToNewsletter from '@/components/forms/SubscribeToNewsletter.vue';
-import Amount from '@/components/forms/Amount.vue';
+import ContactMethod from '@/components/VeeValidate/ContactMethod.vue';
+import ContactEmail from '@/components/VeeValidate/ContactEmail.vue';
+import ContactPhone from '@/components/VeeValidate/ContactPhone.vue';
+import ContractType from '@/components/VeeValidate/ContractType.vue';
+import TermsAndConditions from '@/components/VeeValidate/TermsAndConditions.vue';
+import SubscribeToNewsletter from '@/components/VeeValidate/SubscribeToNewsletter.vue';
+import Amount from '@/components/VeeValidate/Amount.vue';
 
 export default {
   name: 'VeeValidate',
